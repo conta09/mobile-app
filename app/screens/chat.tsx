@@ -1,3 +1,4 @@
+import React from 'react';
 import { 
   View, 
   Text, 
@@ -7,26 +8,29 @@ import {
   StyleSheet, 
   SafeAreaView 
 } from 'react-native';
+import { useRouter } from 'expo-router';
 import { Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 
 const messages = [
-  { id: 1, text: 'Hey there! 👋', sender: 'them', time: '09:30' },
-  { id: 2, text: 'Hi! How are you?', sender: 'me', time: '09:31' },
-  { id: 3, text: 'I\'m great! Want to grab coffee? ☕', sender: 'them', time: '09:32' },
+  { id: '1', text: 'Hey there! 👋', sender: 'them', time: '09:30' },
+  { id: '2', text: 'Hi! How are you?', sender: 'me', time: '09:31' },
+  { id: '3', text: 'I\'m great! Want to grab coffee? ☕', sender: 'them', time: '09:32' },
 ];
 
 export default function ChatScreen() {
+  const router = useRouter();
+  
   return (
     <SafeAreaView style={styles.container}>
       {/* Chat Header */}
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
         <View style={styles.userInfo}>
           <FontAwesome name="user-circle" size={36} color="#4A90E2" />
           <View style={styles.userText}>
-            <Text style={styles.userName}>John Doe</Text>
+            <Text style={styles.userName}>Brian</Text>
             <Text style={styles.userStatus}>Online</Text>
           </View>
         </View>
@@ -73,6 +77,8 @@ export default function ChatScreen() {
           style={styles.input}
           placeholder="Type a message..."
           placeholderTextColor="#999"
+          returnKeyType="send"
+          enablesReturnKeyAutomatically={true}
         />
         
         <TouchableOpacity style={styles.sendButton}>
@@ -94,7 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 15,
     backgroundColor: 'white',
-    borderBottomWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
   },
   userInfo: {
@@ -171,7 +177,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     backgroundColor: 'white',
-    borderTopWidth: 1,
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#EEE',
   },
   iconButton: {
@@ -185,6 +191,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginHorizontal: 10,
     fontSize: 16,
+    includeFontPadding: false, // Prevents text cutoff on Android
   },
   sendButton: {
     backgroundColor: '#4A90E2',

@@ -47,7 +47,7 @@ export default function HomeScreen() {
             style={[styles.button, styles.signupButton]}
             onPress={() => router.push('/screens/chat')}
           >
-            <Text style={styles.buttonText}>Create Account</Text>
+            <Text style={styles.buttonText}>Go to demo</Text>
           </TouchableOpacity>
         </View>
 
