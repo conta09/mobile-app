@@ -1,74 +1,132 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { View, Text, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ImageBackground 
+    source={require('../assets/dark.avif')}
+    style={styles.container}
+    >
+      <View style={styles.overlay}>
+        {/* Header Section */}
+        <View style={styles.header}>
+          <Ionicons name="chatbubbles-sharp" size={80} color="#fff" />
+          <Text style={styles.title}>ConnectSphere</Text>
+          <Text style={styles.subtitle}>Where Conversations Come Alive</Text>
+        </View>
+
+        {/* Features Section */}
+        <View style={styles.features}>
+          <View style={styles.featureItem}>
+            <MaterialIcons name="security" size={34} color="#fff" />
+            <Text style={styles.featureText}>Secure Messaging</Text>
+          </View>
+          <View style={styles.featureItem}>
+            <Ionicons name="happy" size={34} color="#fff" />
+            <Text style={styles.featureText}>Fun Emojis</Text>
+          </View>
+          <View style={styles.featureItem}>
+            <MaterialIcons name="cloud" size={34} color="#fff" />
+            <Text style={styles.featureText}>Cloud Sync</Text>
+          </View>
+        </View>
+
+        {/* Action Buttons */}
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity 
+            style={[styles.button, styles.loginButton]}
+            onPress={() => router.push('/screens/login')}
+          >
+            <Text style={styles.buttonText}>Sign In</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={[styles.button, styles.signupButton]}
+            onPress={() => router.push('/screens/chat')}
+          >
+            <Text style={styles.buttonText}>Create Account</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.footerText}>Join millions of users worldwide</Text>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    padding: 20,
+    justifyContent: 'space-around',
+  },
+  header: {
     alignItems: 'center',
-    gap: 8,
+    marginTop: 50,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  title: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: 'white',
+    marginVertical: 10,
+    fontFamily: 'Helvetica',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  subtitle: {
+    fontSize: 18,
+    color: '#rgba(255,255,255,0.8)',
+    textAlign: 'center',
+  },
+  features: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginVertical: 40,
+  },
+  featureItem: {
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+  featureText: {
+    color: 'white',
+    marginTop: 10,
+    fontSize: 14,
+  },
+  buttonsContainer: {
+    marginHorizontal: 20,
+  },
+  button: {
+    paddingVertical: 15,
+    borderRadius: 30,
+    marginVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  loginButton: {
+    backgroundColor: '#4A90E2',
+  },
+  signupButton: {
+    backgroundColor: '#00C851',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  footerText: {
+    color: 'rgba(255,255,255,0.8)',
+    textAlign: 'center',
+    marginTop: 20,
+    fontSize: 14,
   },
 });
